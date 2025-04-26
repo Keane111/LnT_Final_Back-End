@@ -1,0 +1,86 @@
+.cart-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.quantity-input {
+    max-width: 80px;
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid #ced4da;
+}
+
+.quantity-input:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.cart-total {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffc107;
+}
+
+.checkout-form {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.invoice-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.invoice-header {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.invoice-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-total {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+    font-weight: bold;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

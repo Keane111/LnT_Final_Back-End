@@ -26,13 +26,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-item/{id}', [ItemsController::class, 'getEditPage'])->name('edit-item');
     Route::put('/edit-item/{id}', [ItemsController::class, 'editItem'])->name('edit-item.put');
     Route::delete('/delete-item/{id}', [ItemsController::class, 'deleteItem'])->name('items.delete');
-});
 
-// Route::get('/cart', [InvoiceController::class, 'viewCart']);
-// Route::post('/cart/add', [InvoiceController::class, 'addToCart']);
-// Route::put('/cart/update/{id}', [InvoiceController::class, 'updateCart']);
-// Route::delete('/cart/remove/{id}', [InvoiceController::class, 'removeFromCart']);
-// Route::post('/cart/checkout', [InvoiceController::class, 'checkOut']);
-// Route::get('/invoices', [InvoiceController::class, 'getInvoices']);
-// Route::get('/invoices/{id}', [InvoiceController::class, 'showInvoice']);
+    // Cart & Invoice Routes
+    Route::get('/cart', [InvoiceController::class, 'viewCart'])->name('cart.view');
+    Route::post('/cart/add', [InvoiceController::class, 'addToCart'])->name('cart.add');
+    Route::put('/cart/update/{id}', [InvoiceController::class, 'updateCart'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [InvoiceController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/cart/checkout', [InvoiceController::class, 'checkOut'])->name('cart.checkout');
+    Route::get('/invoices', [InvoiceController::class, 'getInvoices'])->name('invoices.index');
+    Route::get('/invoices/{id}', [InvoiceController::class, 'showInvoice'])->name('invoices.show');
+});
 
