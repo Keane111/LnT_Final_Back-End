@@ -12,9 +12,6 @@ class AuthentificationController extends Controller
 {
     public function register(Request $request)
     {
-
-
-
         $request->validate([
             'name' => 'required|string|min:3|max:40',
             'email' => 'required|email|unique:users|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/',
@@ -32,6 +29,9 @@ class AuthentificationController extends Controller
             'password.required' => 'Password is required',
             'password.min' => 'Password must be at least 6 characters',
             'password.max' => 'Password must not exceed 12 characters',
+            'phone.required' => 'Phone number is required',
+            'phone.min' => 'Phone number must be at least 10 characters',
+            'phone.max' => 'Phone number must not exceed 15 characters',
         ]);
 
         $user = User::create([
@@ -39,21 +39,20 @@ class AuthentificationController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
-            'role' => 'user',
         ]);
 
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        return redirect()->route('login')->with('success', 'Registration successful');
     }
 
-            public function getLoginPage()
-        {
-            return view('Authenticate/login');
-        }
+    public function getLoginPage()
+    {
+        return view('Authenticate/Login');
+    }
 
-        public function getRegisterPage()
-        {
-            return view('Authenticate/register');
-        }
+    public function getRegisterPage()
+    {
+        return view('Authenticate/Register');
+    }
 
     public function login(Request $request)
     {
@@ -70,10 +69,10 @@ class AuthentificationController extends Controller
             $user = Auth::user();
             $token = null;
 
-            return response()->json(['message' => 'Login successful', 'token' => $token, 'user' => $user], 200);
+            return redirect()->route('home')->with('success', 'Login successful');
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return redirect()->back()->with('error', 'Invalid credentials');
     }
 
     function logout(Request $request)

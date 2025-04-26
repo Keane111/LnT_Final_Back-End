@@ -12,13 +12,13 @@ class ItemsController extends Controller
     function getItemPage()
     {
         $items = Items::all();
-        return view('items.index', compact('items'));
+        return view('HomePage', compact('items'));
     }
 
     function getCreatePage()
     {
         $categories = Category::all();
-        return view('Item/create', compact('categories'));
+        return view('Items/CreateItem', compact('categories'));
     }
 
     function createItem(Request $request)
@@ -51,7 +51,7 @@ class ItemsController extends Controller
             'photo' => $filename,
         ]);
 
-        return redirect()->back()->with('success', 'Item created successfully!');
+        return redirect()->route('home')->with('success', 'Item created successfully!');
     }
 
     function deleteItem($id)
@@ -59,14 +59,14 @@ class ItemsController extends Controller
         $item = Items::findOrFail($id);
         $item->delete();
 
-        return redirect()->back()->with('success', 'Item deleted successfully!');
+        return redirect()->route('home')->with('success', 'Item deleted successfully!');
     }
 
-    function getEditItem($id)
+    function getEditPage($id)
     {
         $item = Items::findOrFail($id);
-        // $categories = Category::all();
-        return view('items.edit', compact('item'));
+        $categories = Category::all();
+        return view('Items/EditItem', compact('item', 'categories'));
     }
 
     function editItem(Request $request, $id)
@@ -88,36 +88,20 @@ class ItemsController extends Controller
         ]);
 
         $item = Items::findOrFail($id);
+
+        $filename = $request->hasFile('photo') ? time() . '_' . $request->file('photo')->getClientOriginalName() : $item->photo;
+        if ($request->hasFile('photo')) {
+            $request->file('photo')->storeAs('item_images', $filename, 'public');
+        }
+
         $item->update([
             'name' => $request->name,
             'category_id' => $request->category_id,
             'price' => $request->price,
             'quantity' => $request->quantity,
-            'photo' => $request->hasFile('photo') ? $request->file('photo')->storeAs('item_images', time() . '_' . $request->file('photo')->getClientOriginalName(), 'public') : $item->photo,
+            'photo' => $filename,
         ]);
 
-        return redirect()->back()->with('success', 'Item updated successfully!');
+        return redirect()->route('home')->with('success', 'Item updated successfully!');
     }
-
-    }
-    function updateItem(Request $request, $id)
-    {
-        $request->validate([
-        'name' => 'required|string|max:255',
-        'category_id' => 'required|string',
-        'price' => 'required|numeric',
-        'quantity' => 'required|integer',
-        'photo' => 'nullable|image|max:2048',
-    ]);
-
-    $item = Items::findOrFail($id);
-    $item->update([
-        'name' => $request->name,
-        'category_id' => $request->category_id,
-        'price' => $request->price,
-        'quantity' => $request->quantity,
-        'photo' => $request->hasFile('photo') ? $request->file('photo')->storeAs('item_images', time() . '_' . $request->file('photo')->getClientOriginalName(), 'public') : $item->photo,
-    ]);
-
-    return redirect()->back()->with('success', 'Item updated successfully!');
 }
